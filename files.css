@@ -1,0 +1,125 @@
+/* 공통 스타일 생략 (위와 동일) */
+:root {
+  --bg: #0c0f13;
+  --panel: #12161d;
+  --text: #e7e7ec;
+  --accent: #6ea8ff;
+  --line: rgba(231, 231, 236, 0.2);
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: sans-serif;
+  margin: 0;
+  padding: 20px;
+  text-align: center;
+}
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  border: 1px solid var(--line);
+  background: none;
+  color: var(--text);
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+}
+header {
+  margin-top: 40px;
+  margin-bottom: 30px;
+}
+
+#files-container {
+  max-width: 800px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.chips {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 20px;
+  overflow-x: auto;
+}
+.chip {
+  background: none;
+  border: 1px solid var(--line);
+  color: #888;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.chip.active {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+
+.file-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100%, 1fr)); /* 모바일 1열 */
+  gap: 15px;
+}
+@media (min-width: 500px) {
+  .file-grid {
+    grid-template-columns: repeat(2, 1fr);
+  } /* 태블릿 2열 */
+}
+
+.file-card {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.icon-box {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 10px;
+  color: white;
+}
+.pdf {
+  background: #ff4757;
+}
+.hwp {
+  background: #3498db;
+}
+.zip {
+  background: #ffa502;
+}
+
+.file-info {
+  flex: 1;
+  overflow: hidden;
+}
+.f-name {
+  font-size: 14px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin-bottom: 3px;
+  display: block;
+}
+.f-size {
+  font-size: 12px;
+  color: #777;
+}
+.down-btn {
+  background: none;
+  border: 1px solid var(--line);
+  color: var(--text);
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+}

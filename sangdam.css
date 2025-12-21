@@ -1,3 +1,9 @@
+/* 1️⃣ [수정됨] 변수 정의 추가 (:root) */
+:root {
+  --line: rgba(75, 85, 99, 0.6); /* 테두리용 연한 회색 */
+  --text: #e5e7eb; /* 글자용 흰색 */
+}
+
 * {
   box-sizing: border-box;
 }
@@ -7,8 +13,27 @@ body {
   padding: 0;
   background: radial-gradient(circle at top, #020817, #020617, #000);
   color: #e5e7eb;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
-    "Noto Sans KR", sans-serif;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    'Noto Sans KR', sans-serif;
+}
+
+/* 2️⃣ [수정됨] 뒤로가기 버튼 (이제 변수를 인식합니다) */
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  border: 1px solid var(--line);
+  background: none;
+  color: var(--text);
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.back-btn:hover {
+  border-color: #38bdf8;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
 }
 
 .wrap {
@@ -27,7 +52,11 @@ body {
   font-size: 40px;
   font-weight: 800;
   background: linear-gradient(to right, #38bdf8, #60a5fa, #a855f7);
+
+  /* 3️⃣ [수정됨] 표준 속성 추가 */
   -webkit-background-clip: text;
+  background-clip: text;
+
   -webkit-text-fill-color: transparent;
 }
 .header p {

@@ -1,6 +1,11 @@
+:root {
+  --line: rgba(229, 231, 235, 0.3);
+  --text: #e5e7eb;
+}
+
 body {
   margin: 0;
-  font-family: "Noto Sans KR", sans-serif;
+  font-family: 'Noto Sans KR', sans-serif;
   background: radial-gradient(circle at top, #0a0f24, #000);
   color: #e5e7eb;
 }
@@ -16,6 +21,7 @@ body {
 .header h1 {
   background: linear-gradient(to right, #38bdf8, #60a5fa, #a855f7);
   -webkit-background-clip: text;
+  background-clip: text; /* ✅ 수정됨: 표준 속성 추가 */
   -webkit-text-fill-color: transparent;
 }
 .menu {
@@ -28,9 +34,9 @@ body {
   background: rgba(30, 41, 59, 0.9);
   border: none;
   color: #e5e7eb;
-  padding: 20px 30px;   /* 👈 버튼 세로, 가로 크기 증가 */
-  font-size: 1.1rem;    /* 👈 글자 크기 살짝 키움 */
-  border-radius: 14px;  /* 👈 모서리 둥글게 */
+  padding: 20px 30px;
+  font-size: 1.1rem;
+  border-radius: 14px;
   cursor: pointer;
   transition: 0.2s;
 }
@@ -44,7 +50,7 @@ body {
   padding: 20px;
   border-radius: 12px;
   background: rgba(17, 24, 39, 0.95);
-  box-shadow: 0 0 15px rgba(56,189,248,0.3);
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.3);
 }
 .hidden {
   display: none;
@@ -71,12 +77,13 @@ label {
   display: block;
   margin: 8px 0 4px;
 }
-input, select {
+input,
+select {
   width: 100%;
   padding: 8px;
   border-radius: 8px;
   border: 1px solid #475569;
-  background: rgba(3,7,18,0.9);
+  background: rgba(3, 7, 18, 0.9);
   color: #e2e8f0;
 }
 .checkbox-group {
@@ -95,4 +102,16 @@ input, select {
 }
 .btn:hover {
   box-shadow: 0 0 10px #38bdf8;
+}
+
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  border: 1px solid var(--line); /* ✅ 상단 :root에 정의된 변수 사용 */
+  background: none;
+  color: var(--text); /* ✅ 상단 :root에 정의된 변수 사용 */
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
 }

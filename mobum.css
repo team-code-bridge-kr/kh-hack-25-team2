@@ -1,15 +1,41 @@
+/* 1️⃣ [수정됨] 변수 정의가 없어서 추가했습니다 */
+:root {
+  --line: rgba(75, 85, 99, 0.6);
+  --text: #e5e7eb;
+}
+
 body {
   background: radial-gradient(circle at top, #0f172a, #020617);
   color: #e5e7eb;
-  font-family: "Pretendard", sans-serif;
+  font-family: 'Pretendard', sans-serif;
   margin: 0;
   padding: 0;
+}
+
+/* 2️⃣ [수정됨] .back-btn 중복 제거 및 통합 (상단 고정 스타일) */
+.back-btn {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  border: 1px solid var(--line);
+  background: none;
+  color: var(--text);
+  padding: 8px 16px;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease; /* 부드러운 효과 추가 */
+}
+
+.back-btn:hover {
+  border-color: #38bdf8;
+  color: #38bdf8;
+  background: rgba(56, 189, 248, 0.1);
 }
 
 .container {
   max-width: 900px;
   margin: 0 auto;
-  padding: 40px 20px;
+  padding: 80px 20px 40px; /* 상단 여백을 늘려 헤더가 버튼과 겹치지 않게 조정 */
 }
 
 header {
@@ -18,7 +44,11 @@ header {
 }
 header h1 {
   background: linear-gradient(to right, #38bdf8, #60a5fa);
+
+  /* 3️⃣ [수정됨] 표준 속성 추가 */
   -webkit-background-clip: text;
+  background-clip: text;
+
   -webkit-text-fill-color: transparent;
   font-size: 38px;
   margin: 0;
@@ -53,19 +83,12 @@ header p {
 .btn:hover {
   background: linear-gradient(to right, #2563eb, #38bdf8);
   color: #0f172a;
-  box-shadow: 0 8px 20px rgba(56,189,248,0.4);
+  box-shadow: 0 8px 20px rgba(56, 189, 248, 0.4);
 }
 
-.back-btn {
-  display: inline-block;
-  margin-top: 20px;
-  color: #9ca3af;
-  font-size: 14px;
-  cursor: pointer;
-}
-.back-btn:hover {
-  color: #38bdf8;
-}
+/* ❌ 삭제됨: 아래쪽에 있던 중복된 .back-btn 스타일은 제거했습니다.
+   (상단에 position: absolute로 정의된 버튼과 충돌하기 때문)
+*/
 
 footer {
   text-align: center;

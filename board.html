@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>게시판 | L.I.T.E</title>
+    <link rel="stylesheet" href="board.css" />
+    <script src="board.js" defer></script>
+  </head>
+  <body>
+    <button class="back-btn" onclick="goBack()">← 메인으로</button>
+
+    <header>
+      <h1>L.I.T.E</h1>
+      <p>경희고 학생 소통 공간</p>
+    </header>
+
+    <main>
+      <div id="board-container">
+        <div class="tabs">
+          <button class="tab active" onclick="filterBoard('all')">전체</button>
+          <button class="tab" onclick="filterBoard('notice')">공지</button>
+          <button class="tab" onclick="filterBoard('free')">자유</button>
+        </div>
+
+        <ul id="postList" class="post-list"></ul>
+      </div>
+    </main>
+
+    <button class="fab" onclick="writePost()">✏️</button>
+  </body>
+</html>

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>학습자료 | L.I.T.E</title>
+    <link rel="stylesheet" href="files.css" />
+    <script src="files.js" defer></script>
+  </head>
+  <body>
+    <button class="back-btn" onclick="goBack()">← 메인으로</button>
+
+    <header>
+      <h1>L.I.T.E</h1>
+      <p>수업 및 수행평가 자료실</p>
+    </header>
+
+    <main>
+      <div id="files-container">
+        <div class="chips">
+          <button class="chip active" onclick="filterFiles('all')">전체</button>
+          <button class="chip" onclick="filterFiles('math')">수학</button>
+          <button class="chip" onclick="filterFiles('kor')">국어</button>
+          <button class="chip" onclick="filterFiles('it')">정보</button>
+        </div>
+
+        <div class="file-grid" id="fileGrid"></div>
+      </div>
+    </main>
+  </body>
+</html>

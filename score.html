@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>성적조회 | L.I.T.E</title>
+    <link rel="stylesheet" href="score.css" />
+    <script src="score.js" defer></script>
+  </head>
+  <body>
+    <button class="back-btn" onclick="goBack()">← 메인으로</button>
+
+    <header>
+      <h1>L.I.T.E</h1>
+      <p>1학기 성적 분석 및 조회</p>
+    </header>
+
+    <main>
+      <div id="score-container">
+        <div class="summary-cards">
+          <div class="card">
+            <span>평균 등급</span>
+            <strong class="accent">2.3</strong>
+          </div>
+          <div class="card">
+            <span>전교 석차</span>
+            <strong>15<span class="sub">/200</span></strong>
+          </div>
+        </div>
+
+        <div class="chart-section">
+          <h3>📈 과목별 성취도</h3>
+          <div class="bar-chart" id="barChart"></div>
+        </div>
+
+        <div class="table-section">
+          <h3>📑 상세 성적</h3>
+          <table class="score-table">
+            <thead>
+              <tr>
+                <th>과목</th>
+                <th>점수</th>
+                <th>석차</th>
+                <th>등급</th>
+              </tr>
+            </thead>
+            <tbody id="scoreList"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
