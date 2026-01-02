@@ -1,0 +1,165 @@
+body {
+  margin: 0;
+  font-family: 'Noto Sans KR', system-ui, -apple-system, sans-serif;
+  background: #0b132b;
+  color: #fff;
+}
+header {
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(6px);
+  background: rgba(11, 19, 43, 0.8);
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  z-index: 20;
+}
+header .title {
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  font-size: 1.1rem;
+}
+main {
+  max-width: 1100px;
+  margin: 1.4rem auto 2.4rem;
+  padding: 0 1rem;
+}
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+input[type='search'],
+select {
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  border: none;
+  background: rgba(148, 163, 253, 0.1);
+  color: #e5e7eb;
+  outline: none;
+  min-width: 140px;
+}
+input::placeholder {
+  color: rgba(148, 163, 253, 0.7);
+}
+.back-btn {
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid rgba(129, 140, 248, 0.5);
+  background: rgba(15, 23, 42, 0.9);
+  color: #e5e7eb;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.btn {
+  padding: 0.5rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid rgba(129, 140, 248, 0.5);
+  background: rgba(15, 23, 42, 0.9);
+  color: #e5e7eb;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+.btn:hover {
+  background: rgba(79, 70, 229, 0.9);
+  box-shadow: 0 0 12px rgba(79, 70, 229, 0.5);
+}
+.card {
+  background: rgba(15, 23, 42, 0.98);
+  border-radius: 14px;
+  border: 1px solid rgba(148, 163, 253, 0.18);
+  overflow: hidden;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+thead th {
+  text-align: left;
+  padding: 0.75rem 1rem;
+  background: radial-gradient(
+    circle at top left,
+    rgba(79, 70, 229, 0.22),
+    transparent
+  );
+  border-bottom: 1px solid rgba(148, 163, 253, 0.25);
+  font-weight: 600;
+  color: #c7d2fe;
+  white-space: nowrap;
+}
+tbody td {
+  padding: 0.7rem 1rem;
+  border-top: 1px solid rgba(75, 85, 99, 0.35);
+  vertical-align: middle;
+}
+tbody tr:nth-child(even) {
+  background: rgba(15, 23, 42, 0.98);
+}
+tbody tr:nth-child(odd) {
+  background: rgba(9, 9, 20, 0.98);
+}
+.badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.13rem 0.5rem;
+  margin-left: 0.25rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  border: 1px solid rgba(129, 140, 248, 0.8);
+  color: #a5b4fc;
+  background: rgba(17, 24, 39, 0.96);
+}
+.grade {
+  color: #38bdf8;
+  font-weight: 500;
+}
+.favorite-btn {
+  background: none;
+  border: none;
+  font-size: 1.25rem;
+  cursor: pointer;
+  color: rgba(148, 163, 253, 0.4);
+  padding: 0;
+}
+.favorite-btn.active {
+  color: #facc15;
+  text-shadow: 0 0 8px rgba(250, 204, 21, 0.7);
+}
+.dday {
+  font-weight: 600;
+  color: #38bdf8;
+}
+.dday.expired {
+  color: #fb7185;
+}
+.dday.today {
+  color: #22c55e;
+}
+.dday.none {
+  color: #6b7280;
+  font-weight: 400;
+}
+.empty {
+  text-align: center;
+  padding: 1rem;
+  color: #9ca3af;
+}
+@media (max-width: 720px) {
+  thead th:nth-child(2),
+  tbody td:nth-child(2) {
+    display: none; /* 교사 컬럼 모바일에서 축소 */
+  }
+}

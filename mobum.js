@@ -17,7 +17,7 @@ function showGradeSelect() {
 }
 
 // ==============================
-// 2️⃣ 학년별 과목 목록
+// 2️⃣ 학년별 과목 목록 (데이터 동일)
 // ==============================
 const subjects = {
   1: ['국어', '영어', '수학', '정보', '일본어', '역사', '사회', '과학'],
@@ -33,7 +33,7 @@ const subjects = {
     '물리학',
     '화학',
     '생명과학',
-    '지구과',
+    '지구과학',
     '미적분Ⅱ',
     '기하',
     '경제 수학',
@@ -94,7 +94,7 @@ function selectGrade(grade) {
         )
         .join('')}
     </div>
-    <div class="back-btn" onclick="showGradeSelect()">← 학년 선택으로 돌아가기</div>
+    <div class="sub-back-btn" onclick="showGradeSelect()">← 학년 선택으로 돌아가기</div>
   `;
 }
 
@@ -112,7 +112,7 @@ function selectSubject(grade, subject) {
         )
         .join('')}
     </div>
-    <div class="back-btn" onclick="selectGrade(${grade})">← 과목 선택으로 돌아가기</div>
+    <div class="sub-back-btn" onclick="selectGrade(${grade})">← 과목 선택으로 돌아가기</div>
   `;
 }
 
@@ -130,7 +130,7 @@ function selectYear(grade, subject, year) {
         )
         .join('')}
     </div>
-    <div class="back-btn" onclick="selectSubject(${grade}, '${subject}')">← 연도 선택으로 돌아가기</div>
+    <div class="sub-back-btn" onclick="selectSubject(${grade}, '${subject}')">← 연도 선택으로 돌아가기</div>
   `;
 }
 
@@ -140,12 +140,15 @@ function selectYear(grade, subject, year) {
 function showAnswers(grade, subject, year, examType) {
   main.innerHTML = `
     <h2 class="section-title">${year}년 ${grade}학년 ${subject} - ${examType}</h2>
-    <p style="text-align:center; margin-top:40px; color:#9ca3af;">
-      📄 ${year}년 ${grade}학년 ${subject} ${examType} 모범답안이 곧 공개됩니다.
-    </p>
-    <div class="back-btn" onclick="selectYear(${grade}, '${subject}', ${year})">← 시험 선택으로 돌아가기</div>
+    <div style="background:rgba(255,255,255,0.05); padding:20px; border-radius:12px; margin-top:20px;">
+        <p style="text-align:center; color:#9ca3af;">
+        📄 <strong>${examType}</strong> 모범답안 파일이 준비되지 않았습니다.
+        </p>
+    </div>
+    <div class="sub-back-btn" onclick="selectYear(${grade}, '${subject}', ${year})">← 시험 선택으로 돌아가기</div>
   `;
 }
+
 function goBack() {
-  window.location.href = 'Lite_hackathon.html';
+  window.location.href = 'lite_hackathon.html'; // 파일명이 index.html이 맞는지 확인하세요
 }

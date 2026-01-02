@@ -30,24 +30,94 @@ $('#loginBtn').addEventListener('click', () => {
   window.location.href = 'login.html';
 });
 
-/* ========== Search (stub) ========== */
+/* ========== 🔍 검색 기능 (핵심 업데이트) ========== */
 $('#searchForm').addEventListener('submit', (e) => {
   e.preventDefault();
-  const q = ($('#q').value || '').trim();
-  if (!q) return alert('검색어를 입력하세요.');
-  alert(`검색 기능 준비 중입니다.\n입력한 검색어: ${q}`);
-});
+  const input = $('#q');
+  const query = (input.value || '').trim(); // 공백 제거
 
-/* ========== Timetable grid ========== */
-(function buildTimetable() {
-  const area = $('.timetable .cells');
-  if (!area) return;
-  const rows = 5,
-    cols = 6;
-  for (let i = 0; i < rows * cols; i++) {
-    area.appendChild(document.createElement('div'));
+  if (!query) return alert('검색어를 입력하세요.');
+
+  // 1. 페이지 매핑 리스트
+  const pageMap = [
+    {
+      keywords: ['수행', '평가', '과제'],
+      url: 'suhang.html',
+      name: '수행평가',
+    },
+    {
+      keywords: ['성적', '점수', '등급', '내신'],
+      url: 'score.html',
+      name: '성적조회',
+    },
+    {
+      keywords: ['답안', '정답', '모범'],
+      url: 'mobum.html',
+      name: '정기고사 모범답안',
+    },
+    { keywords: ['채점', '가채점'], url: 'gache.html', name: '가채점' },
+    {
+      keywords: ['모의', '학력', '수능'],
+      url: 'mogo.html',
+      name: '모의고사 학습',
+    },
+    { keywords: ['알림', '신청'], url: 'allim.html', name: '알림신청' },
+    {
+      keywords: ['게시판', '공지', '소통', '자유'],
+      url: 'board.html',
+      name: '경희 게시판',
+    },
+    { keywords: ['자료', '파일', '다운'], url: 'files.html', name: '학습자료' },
+    { keywords: ['마이', '내정보', '프로필'], url: 'my.html', name: 'My 기능' },
+    {
+      keywords: ['상담', '진로', '컨설팅'],
+      url: 'sangdam.html',
+      name: '진로상담',
+    },
+    {
+      keywords: ['학사', '일정', '달력', '캘린더'],
+      url: 'haksa.html',
+      name: '학사일정',
+    },
+    { keywords: ['로그인', '접속'], url: 'login.html', name: '로그인' },
+  ];
+
+  // 2. 키워드 매칭 확인
+  const target = pageMap.find((item) =>
+    item.keywords.some((k) => query.includes(k))
+  );
+
+  if (target) {
+    // 매칭된 페이지가 있으면 이동
+    // confirm(`'${target.name}' 페이지로 이동하시겠습니까?`) // 확인창이 필요하면 주석 해제
+    window.location.href = target.url;
+  } else {
+    // 3. 페이지가 없으면 위젯 관련 검색인지 확인
+    if (
+      query.includes('급식') ||
+      query.includes('밥') ||
+      query.includes('메뉴')
+    ) {
+      alert(
+        "급식 정보는 '오늘의 급식' 위젯에서 확인할 수 있습니다.\n위젯 추가 화면을 열어드릴게요!"
+      );
+      openModal();
+    } else if (query.includes('시간표')) {
+      alert('시간표는 위젯으로 제공됩니다.\n위젯 추가 화면을 열어드릴게요!');
+      openModal();
+    } else {
+      // 4. 아무것도 없으면 안내 메시지
+      alert(
+        `'${query}'에 대한 페이지를 찾지 못했습니다.\n사이드바 메뉴를 확인해보세요.`
+      );
+      openSidebar(); // 사이드바를 열어주는 센스
+    }
   }
-})();
+
+  // 입력창 초기화 및 포커스 해제 (모바일 키보드 닫기)
+  input.value = '';
+  input.blur();
+});
 
 /* ========== Widget modal ========== */
 const modal = $('#widgetModal');
@@ -78,11 +148,10 @@ function createWidget(type) {
       <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
     </svg>`;
 
-  // ✅ 마지막 위젯도 제대로 삭제되도록 setTimeout 적용
   closeBtn.addEventListener('click', () => {
     setTimeout(() => {
       card.remove();
-      updateWidgetHint(); // 삭제 후 문구 갱신
+      updateWidgetHint();
     }, 0);
   });
 
@@ -108,17 +177,15 @@ function createWidget(type) {
       h3.textContent = '오늘의 급식';
       const ul = document.createElement('ul');
       ul.className = 'lunch-list';
-      [
-        '밥 · 국 · 메인 반찬',
-        '부반찬 A',
-        '부반찬 B',
-        '디저트(과일/요거트)',
-      ].forEach((t) => {
+      ul.id = 'todayLunchWidget'; // ID 부여 (데이터 로딩용)
+      ['로딩 중...'].forEach((t) => {
         const li = document.createElement('li');
         li.textContent = t;
         ul.appendChild(li);
       });
       body.appendChild(ul);
+      // 위젯 생성 시 데이터 로드 트리거
+      setTimeout(loadTodayLunch, 100);
       break;
     }
     case 'exam-schedule': {
@@ -147,7 +214,7 @@ function createWidget(type) {
   return card;
 }
 
-/* ========== 위젯 안내 문구 (NEW) ========== */
+/* ========== 위젯 안내 문구 ========== */
 function updateWidgetHint() {
   const widgetCount = document.querySelectorAll('.widget-grid .widget').length;
   const hint = document.getElementById('widgetHint');
@@ -160,32 +227,19 @@ $$('.picker-item', modal).forEach((btn) => {
   btn.addEventListener('click', () => {
     const w = createWidget(btn.dataset.widget);
     $('#widgetGrid').appendChild(w);
-    updateWidgetHint(); // 추가 후 문구 갱신
+    updateWidgetHint();
     closeModal();
   });
 });
 
-/* ========== 초기 위젯 삭제 버튼 ========== */
-$$('.remove-widget').forEach((btn) => {
-  btn.addEventListener('click', (e) => {
-    const card = e.currentTarget.closest('.widget');
-    setTimeout(() => {
-      card.remove();
-      updateWidgetHint(); // 삭제 후 문구 갱신
-    }, 0);
-  });
-});
-
-/* ✅ 페이지 로드 시 초기 상태 확인 */
+/* ========== 초기 로드 ========== */
 updateWidgetHint();
 
-// === 다크모드 / 라이트모드 토글 ===
 // === 다크모드 / 라이트모드 토글 ===
 document.addEventListener('DOMContentLoaded', () => {
   const themeBtn = document.getElementById('themeToggle');
   const body = document.body;
 
-  // 페이지 로드 시 저장된 테마 불러오기
   const savedTheme = localStorage.getItem('theme');
   if (savedTheme === 'light') {
     body.classList.add('light-mode');
@@ -194,15 +248,13 @@ document.addEventListener('DOMContentLoaded', () => {
     themeBtn.textContent = '🌙';
   }
 
-  // 버튼 클릭 시 테마 변경
   themeBtn.addEventListener('click', () => {
-    body.classList.add('theme-transition'); // 페이드 효과
+    body.classList.add('theme-transition');
     setTimeout(() => body.classList.remove('theme-transition'), 500);
 
     body.classList.toggle('light-mode');
     const isLight = body.classList.contains('light-mode');
     themeBtn.textContent = isLight ? '☀️' : '🌙';
-
     localStorage.setItem('theme', isLight ? 'light' : 'dark');
   });
 });
@@ -212,103 +264,39 @@ setTimeout(() => {
   document.body.classList.remove('theme-transition');
 }, 600);
 
-// 📅 오늘의 급식 위젯 업데이트
-async function updateLunchMenu() {
-  const widget = document.querySelector(".widget[data-type='lunch']");
-  const content = widget.querySelector('.widget-content');
-
-  try {
-    const response = await fetch('11월_급식표.xlsx');
-    const arrayBuffer = await response.arrayBuffer();
-    const workbook = XLSX.read(arrayBuffer, { type: 'array' });
-
-    // 첫 번째 시트 읽기
-    const sheetName = workbook.SheetNames[0];
-    const sheet = workbook.Sheets[sheetName];
-    const data = XLSX.utils.sheet_to_json(sheet);
-
-    // 오늘 날짜 구하기 (예: 11/08)
-    const today = new Date();
-    const month = today.getMonth() + 1; // 0부터 시작
-    const day = today.getDate();
-    const todayStr = `${month}/${day}`; // 예: "11/8"
-
-    // 급식 데이터에서 오늘 날짜 찾기
-    const todayMenu = data.find((row) => {
-      const dateStr = String(row['날짜']).replace(/\s/g, '');
-      return dateStr.includes(`${month}월`) && dateStr.includes(`${day}일`);
-    });
-
-    // 결과 표시
-    if (todayMenu && todayMenu['급식']) {
-      const items = todayMenu['급식']
-        .split('\n')
-        .map((i) => `<li>${i.trim()}</li>`)
-        .join('');
-      content.innerHTML = `<ul>${items}</ul>`;
-    } else {
-      content.textContent = '오늘의 급식은 없습니다';
-    }
-  } catch (error) {
-    console.error('급식 데이터를 불러오는 중 오류 발생:', error);
-    content.textContent = '오늘의 급식은 없습니다';
-  }
-}
-
-// 페이지 로드 시 실행
-window.addEventListener('DOMContentLoaded', () => {
-  updateLunchMenu();
-});
-
 /* ============================= */
-/* 🍱 오늘의 급식 자동 표시 기능 (날짜 표시 추가) */
+/* 🍱 오늘의 급식 데이터 로드 */
 /* ============================= */
-
 async function loadTodayLunch() {
-  const listElement = document.getElementById('todayLunch');
+  // 생성된 위젯이 있는지 확인
+  const listElement = document.querySelector('.lunch-list');
   if (!listElement) return;
 
   try {
-    // 급식 데이터 불러오기
-    const response = await fetch('data/meals.json');
-    const meals = await response.json();
+    // 실제로는 API나 파일을 불러옵니다. 여기서는 예시 데이터
+    const dummyMeals = [
+      {
+        날짜: '11월 8일',
+        메뉴: '현미밥, 쇠고기미역국, 돈육불고기, 계란말이, 배추김치',
+      },
+    ];
 
-    // 오늘 날짜 구하기
     const today = new Date();
-    const month = today.getMonth() + 1;
-    const day = today.getDate();
-    const todayStr = `${month}월 ${day}일`;
+    const todayStr = `${today.getMonth() + 1}월 ${today.getDate()}일`;
 
-    // 주말(토,일)에는 급식 없음
-    const dayOfWeek = today.getDay();
-    if (dayOfWeek === 0 || dayOfWeek === 6) {
-      listElement.innerHTML = `<li>${todayStr} 🍽️ 오늘의 급식은 없습니다</li>`;
-      return;
-    }
+    // 예시 데이터 사용 (실제 구현 시 fetch 사용)
+    // const meal = dummyMeals.find(...)
 
-    // 날짜 비교 (공백/‘2024년’ 제거)
-    const meal = meals.find((item) => {
-      const cleanDate = item.날짜.replace(/\s/g, '').replace('2024년', '');
-      const target = todayStr.replace(/\s/g, '');
-      return cleanDate === target;
-    });
-
-    // 결과 표시
-    if (밥) {
-      const menuItems = meal.메뉴
-        .split(',')
-        .map((m) => `<li>${m.trim()}</li>`)
-        .join('');
-      listElement.innerHTML =
-        `<li><strong>${todayStr} 급식 🍱</strong></li>` + menuItems;
-    } else {
-      listElement.innerHTML = `<li>${todayStr} 🍽️ 오늘의 급식은 없습니다</li>`;
-    }
+    // UI 업데이트 (테스트용)
+    listElement.innerHTML = `
+        <li><strong>${todayStr} 급식</strong></li>
+        <li>쌀밥</li>
+        <li>순두부찌개</li>
+        <li>제육볶음</li>
+        <li>깍두기</li>
+    `;
   } catch (err) {
-    console.error('급식 데이터를 불러오는 중 오류:', err);
-    listElement.innerHTML = `<li>${todayStr} ❌ 급식 정보를 불러오지 못했습니다</li>`;
+    console.error('급식 로드 실패:', err);
+    listElement.innerHTML = `<li>정보를 불러올 수 없습니다.</li>`;
   }
 }
-
-// 페이지 로드 시 실행
-document.addEventListener('DOMContentLoaded', loadTodayLunch);
