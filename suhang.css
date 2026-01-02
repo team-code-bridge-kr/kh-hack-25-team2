@@ -39,7 +39,7 @@ select {
   border-radius: 8px;
   border: none;
   background: rgba(148, 163, 253, 0.1);
-  color: #e5e7eb;
+  color: rgba(148, 163, 253, 0.7);
   outline: none;
   min-width: 140px;
 }
