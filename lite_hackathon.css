@@ -17,12 +17,54 @@ html,
 body {
   height: 100%;
 }
+
+/* ✨ 배경 애니메이션 추가 
+  - background-position을 천천히 이동시켜 별이 흐르는 효과
+*/
+@keyframes moveBackground {
+  0% {
+    background-position: 0 0, 100px 150px, -50px -50px;
+  }
+  100% {
+    background-position: -50px 50px, 80px 180px, -80px -20px;
+  }
+}
+
 body {
   margin: 0;
   color: var(--line);
-  background: var(--bg);
+  background-color: var(--bg);
+
+  /* 불규칙한 별 배경 레이어 */
+  background-image: radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.8) 0.5px,
+      transparent 1px
+    ),
+    radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 1) 1px,
+      rgba(255, 255, 255, 0.2) 2px,
+      transparent 3px
+    ),
+    radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 1) 1.5px,
+      rgba(255, 255, 255, 0.3) 4px,
+      transparent 5px
+    );
+
+  background-size: 300px 300px, 450px 450px, 600px 600px;
+  background-position: 0 0, 100px 150px, -50px -50px;
+
+  /* 60초 동안 천천히 움직이며 흐르는 느낌 구현 */
+  animation: moveBackground 60s linear infinite alternate;
+
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto,
     'Noto Sans KR', Helvetica, Arial;
+
+  transition: background-color 0.6s ease, color 0.6s ease;
+  overflow-x: hidden; /* 가로 스크롤 방지 */
 }
 
 /* 공통 아이콘 버튼 */
@@ -94,7 +136,7 @@ body {
   align-items: center;
 }
 
-/* 검색창: 중앙보다 살짝 위 */
+/* 검색창 */
 .search {
   width: min(760px, 92%);
   position: relative;
@@ -340,120 +382,67 @@ body {
 }
 .widget-hint {
   font-size: 14px;
-  color: #fff; /* 👈 명확하게 밝은 회색 계열로 지정 */
+  color: #fff;
   margin-left: 10px;
   align-self: center;
-  display: none; /* 기본적으로 숨김 */
+  display: none;
   opacity: 0.85;
   transition: opacity 0.3s ease;
-}
-
-:root {
-  --bg: #0c0f13;
-  --panel: #12161d;
-  --line: #e7e7ec;
-  --muted: #a2a8b4;
-  --accent: #6ea8ff;
-  --accent2: #9b7bff;
-  --border: rgba(231, 231, 236, 0.22);
-  --shadow: 0 18px 50px rgba(0, 0, 0, 0.45), 0 6px 16px rgba(0, 0, 0, 0.35);
-  --radius: 16px;
-}
-* {
-  box-sizing: border-box;
-}
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  color: var(--line);
-  background: var(--bg);
-  font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
-  transition: background-color 0.6s ease, color 0.6s ease;
-}
-
-/* ... (나머지 기존 CSS 스타일 그대로 유지) ... */
-/* 위젯, 헤더, 아이콘 버튼, 모달, 반응형 스타일 등 */
-/* 스크롤 압박 방지를 위해 기존 코드를 그대로 사용하시면 됩니다. */
-
-.icon-btn {
-  background: transparent;
-  color: var(--line);
-  border: 1.5px solid var(--border);
-  border-radius: 12px;
-  width: 42px;
-  height: 42px;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: border-color 0.15s ease, transform 0.05s ease;
 }
 
 /* 🌞 라이트모드 전용 스타일 확장 */
 body.light-mode {
   background-color: #f9f9f9;
   color: #222;
+  background-image: none; /* 별 배경 제거 */
+  animation: none; /* 배경 흐름 제거 */
 }
 
-/* 🌞 위젯 */
+/* 🌞 라이트모드에서 별똥별 숨김 */
+body.light-mode .star-container {
+  display: none;
+}
+
+/* ... (라이트모드 기타 스타일들 기존과 동일) ... */
 body.light-mode .widget {
   background-color: #ffffff;
   border: 1.5px solid #ccc;
   color: #222;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
 }
-
-/* 🌞 위젯 내 테이블 */
 body.light-mode .widget table,
 body.light-mode .widget td,
 body.light-mode .widget th {
   border-color: #ccc;
 }
-
-/* 🌞 검색창 */
 body.light-mode .search-box input {
   background: #fff;
   color: #222;
   border: 1px solid #ccc;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
-
-/* 🌞 로고 (L.I.T.E 텍스트) */
 body.light-mode .logo {
   color: #222 !important;
 }
-
-/* 🌞 햄버거 메뉴 (≡) */
 body.light-mode .menu-toggle {
   color: #222 !important;
   border-color: #ccc;
 }
-
 body.light-mode .menu-toggle:hover {
   background-color: rgba(0, 0, 0, 0.05);
 }
-
-/* 🌞 로그인 버튼 (우측 상단) */
 body.light-mode .login-btn {
   color: #222 !important;
   border-color: #ccc;
 }
-
 body.light-mode .login-btn:hover {
   background-color: rgba(0, 0, 0, 0.05);
 }
-
-/* 🌞 사이드바 */
 body.light-mode .sidebar {
   background-color: #fff;
   color: #111;
   border-right: 1px solid #ddd;
 }
-
-/* 🌗 모드 전환 버튼 (애니메이션 포함 완전 버전) */
 .theme-toggle {
   position: fixed;
   left: 20px;
@@ -473,45 +462,31 @@ body.light-mode .sidebar {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   transform: scale(1);
 }
-
-/* hover 시 */
 .theme-toggle:hover {
   background-color: rgba(255, 255, 255, 0.1);
   transform: scale(1.1);
   box-shadow: 0 6px 20px rgba(255, 220, 100, 0.5);
 }
-
-/* 클릭 시 (눌림 효과) */
 .theme-toggle:active {
   transform: scale(0.95);
   box-shadow: 0 3px 8px rgba(255, 220, 100, 0.3);
 }
-
-/* 라이트 모드 전환 후 */
 body.light-mode .theme-toggle {
   color: #222;
   border-color: #222;
   background-color: transparent;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
-
-/* 라이트모드 hover 시 */
 body.light-mode .theme-toggle:hover {
   background-color: rgba(0, 0, 0, 0.05);
   box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
 }
-
-/* 🌞 링크 등 */
 body.light-mode a {
   color: #0077cc;
 }
-
-/* ===== 부드러운 모드 전환 효과 ===== */
 body {
   transition: background-color 0.6s ease, color 0.6s ease;
 }
-
-/* 모든 주요 요소 전환 시 부드럽게 바뀌게 */
 .widget,
 header,
 .search-box input,
@@ -521,89 +496,54 @@ header,
   transition: background-color 0.6s ease, color 0.6s ease,
     border-color 0.6s ease, box-shadow 0.6s ease, transform 0.3s ease;
 }
-
-/* =============================== */
-/* 🌞 라이트 모드 대비 강화 (추가 부분) */
-/* =============================== */
-
-/* 헤더 구분선 진하게 */
 body.light-mode .header {
-  border-bottom: 1.5px solid #000; /* 진한 검정 라인 */
+  border-bottom: 1.5px solid #000;
 }
-
-/* 햄버거 메뉴 (≡) */
 body.light-mode #openSidebar svg path {
-  stroke: #000 !important; /* 검정색으로 */
+  stroke: #000 !important;
 }
-
-/* 로그인 버튼 (오른쪽 아이콘) */
 body.light-mode #loginBtn svg path {
   stroke: #000 !important;
 }
-
-/* 위젯 테두리 */
 body.light-mode .widget {
-  border: 1.5px solid #000; /* 진한 테두리 */
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15); /* 더 뚜렷한 그림자 */
+  border: 1.5px solid #000;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
 }
-
-/* 검색창 */
 body.light-mode .search {
   border: 2px solid #000;
   background: #fff;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
-
-/* 검색창 돋보기 아이콘 */
 body.light-mode .search-icon svg path,
 body.light-mode .search-icon svg circle {
   stroke: #000;
 }
-
-/* L.I.T.E 로고 */
 body.light-mode .logo {
   color: #000 !important;
 }
-
-/* 사이드바 테두리 */
 body.light-mode .sidebar {
   border-right: 1.5px solid #000;
 }
-
-/* 사이드바 메뉴 hover 시 더 진하게 */
 body.light-mode .menu-item:hover {
   background: rgba(0, 0, 0, 0.05);
   border-left-color: #000;
 }
-
-/* 플러스 버튼 (FAB) 주변 대비 향상) */
 body.light-mode .fab {
   box-shadow: 0 3px 10px rgba(0, 0, 0, 0.25);
 }
-
-/* =============================== */
-/* 🌞 라이트 모드: 위젯 추가 모달 반전 */
-/* =============================== */
-
 body.light-mode .modal-card {
-  background: #ffffff; /* 밝은 배경 */
-  color: #111; /* 어두운 텍스트 */
+  background: #ffffff;
+  color: #111;
   border: 1.5px solid #ccc;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
 }
-
-/* 모달 헤더, 푸터 경계선 */
 body.light-mode .modal-header,
 body.light-mode .modal-footer {
   border-color: #ccc;
 }
-
-/* 닫기(X) 버튼 색상 변경 */
 body.light-mode #closeModal svg path {
-  stroke: #000; /* 검정색 아이콘 */
+  stroke: #000;
 }
-
-/* 위젯 버튼들 */
 body.light-mode .picker-item {
   border: 1.5px dashed #444;
   color: #111;
@@ -612,27 +552,96 @@ body.light-mode .picker-item {
 body.light-mode .picker-item:hover {
   background: rgba(0, 0, 0, 0.05);
 }
-
-/* 안내 문구 */
 body.light-mode .modal-footer small {
   color: #333;
 }
-
-/* =============================== */
-/* 📍 닫기(X) 버튼 위치 오른쪽 정렬 */
-/* =============================== */
 .modal-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
-
 #closeModal {
-  margin-left: auto; /* 오른쪽 끝으로 이동 */
+  margin-left: auto;
 }
-
 #todayLunch li:first-child {
   font-weight: bold;
   color: #333;
   margin-bottom: 6px;
+}
+
+/* ========================================= */
+/* 🌠 별똥별(Shooting Star) 애니메이션 스타일 */
+/* ========================================= */
+
+.star-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* 클릭 방해하지 않음 */
+  z-index: 0;
+  overflow: hidden;
+}
+
+.shooting-star {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1),
+    0 0 0 8px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 1);
+  animation: shoot 3s linear infinite;
+  opacity: 0;
+}
+
+/* 별똥별 꼬리 */
+.shooting-star::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 300px;
+  height: 1px;
+  background: linear-gradient(90deg, #fff, transparent);
+}
+
+/* 별똥별 애니메이션 키프레임 */
+@keyframes shoot {
+  0% {
+    transform: rotate(315deg) translateX(0);
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+  }
+  100% {
+    transform: rotate(315deg) translateX(-1000px);
+    opacity: 0;
+  }
+}
+
+/* 각 별똥별마다 위치와 시간차를 다르게 설정하여 자연스럽게 만듦 */
+.shooting-star:nth-child(1) {
+  top: 0;
+  left: 50%; /* 가운데 위에서 시작 */
+  animation-delay: 0s;
+  animation-duration: 4s;
+}
+
+.shooting-star:nth-child(2) {
+  top: 20%;
+  left: 80%; /* 오른쪽 위에서 시작 */
+  animation-delay: 2s;
+  animation-duration: 8s;
+}
+
+.shooting-star:nth-child(3) {
+  top: 60%;
+  left: 100%; /* 오른쪽 아래에서 시작 */
+  animation-delay: 5s;
+  animation-duration: 10s;
 }
